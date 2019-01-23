@@ -13,6 +13,24 @@ import java.util.Arrays;
  * API для клиента!!!
  */
 public class GameController {
+    // singleton
+    private static GameController gameController;
+
+    public static GameController getInstance() {
+        GameController localInstance = gameController;
+        if (localInstance == null) {
+            synchronized (GameController.class) {
+                localInstance = gameController;
+                if (localInstance == null) {
+                    gameController = localInstance = new GameController();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    private GameController() {
+    }
 
     public static final String LEVEL_PATH = "src/main/resources/levels/stage_";
     public static final String EXPANSION = ".lvl";
@@ -52,12 +70,12 @@ public class GameController {
         return Arrays.copyOfRange(session.getGameField().getField(), 0, session.getGameField().getField().length);
     }
 
-    /**
-     * Получение текущего игрового счета
-     */
-    public int getScore() {
-        return session.getScore();
-    }
+//    /**
+//     * Получение текущего игрового счета
+//     */
+//    public int getScore() {
+//        return gameController.getScore();
+//    }
 
     /**
      * Получение объекта по цвету
@@ -72,9 +90,8 @@ public class GameController {
      * Передвигает шарик по полю по направлению
      * @param colour цвет
      * @param direction направление
-     * @return текущее состояние поля
      */
-    public Entity[][] makeMove(Colour colour, Direction direction) {
+    public void makeMove(Colour colour, Direction direction) {
         Entity ball = getBall(colour);
         Point newCoordinateOfBall = session.move(ball, direction);
         Entity[][] field;
@@ -90,9 +107,9 @@ public class GameController {
             }
         } else {
             session.getGameField().deleteEntity(ball);
-            session.setScore(session.getScore() + 1);
+            //session.setScore(gameController.getScore() + 1);
         }
-        return getField();
+        getField();
     }
 
     public boolean isWin() {

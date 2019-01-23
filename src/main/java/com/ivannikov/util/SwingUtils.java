@@ -1,4 +1,4 @@
-package com.efimov.utils;
+package com.ivannikov.util;
 
 import java.awt.Component;
 import java.awt.Dimension;

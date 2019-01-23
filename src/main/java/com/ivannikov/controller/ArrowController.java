@@ -3,7 +3,9 @@ package com.ivannikov.controller;
 
 import com.ivannikov.model.Colour;
 import com.ivannikov.model.Direction;
+import com.ivannikov.util.SwingUtils;
 import com.ivannikov.view.Board;
+import com.ivannikov.view.LevelForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +29,7 @@ public class ArrowController implements KeyListener {
     private boolean isG;
     private boolean isB;
 
-    public ArrowController(Board board, GameController controller) {
+    public ArrowController(Board board) {
         this.isLeft = false;
         this.isRight = false;
         this.isUp = false;
@@ -37,7 +39,7 @@ public class ArrowController implements KeyListener {
         isO = false;
         isR = false;
         this.board = board;
-        this.controller = controller;
+        this.controller = GameController.getInstance();
     }
 
     public void move() {
@@ -97,9 +99,11 @@ public class ArrowController implements KeyListener {
         return isR;
     }
 
+    @Override
     public void keyTyped(final KeyEvent e) {
     }
 
+    @Override
     public void keyPressed(final KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             this.isLeft = true;
@@ -140,14 +144,15 @@ public class ArrowController implements KeyListener {
         }
 
         if (isRightPressed() || isLeftPressed() || isDownPressed() || isUpPressed()) {
-
-
             move();
             board.repaint();
-            if (controller.isWin()) com.efimov.utils.SwingUtils.showInfoMessageBox("Вы выиграли!");
+            if (controller.isWin()) {
+                SwingUtils.showInfoMessageBox("Вы выиграли!");
+            }
         }
     }
 
+    @Override
     public void keyReleased(final KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             this.isLeft = false;
