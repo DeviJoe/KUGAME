@@ -4,7 +4,8 @@ import com.ivannikov.model.*;
 
 public class GameService {
 
-    GameField field;
+    private int score;
+    private final GameField field;
 
     public GameService(GameField field) {
         this.field = field;
@@ -24,6 +25,15 @@ public class GameService {
          */
 
         if (!(ball instanceof Ball)) throw new RuntimeException("Шарик не найден");
-        return field.scanFieldForMove(ball, direction);
+        Point state = field.scanFieldForMove(ball, direction);
+        if (state != null) return state;
+        else {
+            ball.setVisible(false);
+            score ++;
+            field.deleteEntity(ball);
+            return null;
+        }
     }
+
+
 }

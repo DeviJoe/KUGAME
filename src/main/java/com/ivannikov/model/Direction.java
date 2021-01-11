@@ -10,9 +10,9 @@ public enum Direction {
     RIGHT(0, 1);
 
     @Getter
-    private int offsetLine;
+    private final int offsetLine;
     @Getter
-    private int offsetColumn;
+    private final int offsetColumn;
 
     Direction(int offsetLine, int offsetColumn) {
         this.offsetLine = offsetLine;
