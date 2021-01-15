@@ -28,8 +28,19 @@ public class LevelLoader {
                 switch (code) {
                     case "00" -> res[i][j] = null;
                     case "99" -> res[i][j] = new Wall(ResourceLoader.loadImage("src/main/resources/sprites/wall.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)));
+                    case "11" -> res[i][j] = new Ball(ResourceLoader.loadImage("src/main/resources/sprites/red_ball.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.RED);
+                    case "12" -> res[i][j] = new Ball(ResourceLoader.loadImage("src/main/resources/sprites/blue_ball.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.BLUE);
+                    case "13" -> res[i][j] = new Ball(ResourceLoader.loadImage("src/main/resources/sprites/orange_ball.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.ORANGE);
+                    case "14" -> res[i][j] = new Ball(ResourceLoader.loadImage("src/main/resources/sprites/green_ball.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.GREEN);
+                    case "21" -> res[i][j] = new Base(ResourceLoader.loadImage("src/main/resources/sprites/red_base.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.RED);
+                    case "22" -> res[i][j] = new Base(ResourceLoader.loadImage("src/main/resources/sprites/blue_base.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.BLUE);
+                    case "23" -> res[i][j] = new Base(ResourceLoader.loadImage("src/main/resources/sprites/orange_base.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.ORANGE);
+                    case "24" -> res[i][j] = new Base(ResourceLoader.loadImage("src/main/resources/sprites/green_base.png"), GameField.getPointFromCoordinate(new Coordinate(i, j)), Colour.GREEN);
                 }
+                j++;
             }
+            i++;
+            j = 0;
         }
         return res;
     }

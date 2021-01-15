@@ -1,14 +1,18 @@
 package com.ivannikov.service;
 
 import com.ivannikov.model.*;
+import lombok.Getter;
+import lombok.Setter;
 
 public class GameService {
 
+    @Getter @Setter
     private int score;
-    private final GameField field;
+    @Getter
+    private final GameField gameField;
 
-    public GameService(GameField field) {
-        this.field = field;
+    public GameService(GameField gameField) {
+        this.gameField = gameField;
     }
 
     /**
@@ -25,12 +29,12 @@ public class GameService {
          */
 
         if (!(ball instanceof Ball)) throw new RuntimeException("Шарик не найден");
-        Point state = field.scanFieldForMove(ball, direction);
+        Point state = gameField.scanFieldForMove(ball, direction);
         if (state != null) return state;
         else {
             ball.setVisible(false);
             score ++;
-            field.deleteEntity(ball);
+            gameField.deleteEntity(ball);
             return null;
         }
     }

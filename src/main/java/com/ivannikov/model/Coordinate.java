@@ -1,11 +1,13 @@
 package com.ivannikov.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@EqualsAndHashCode
 public class Coordinate {
 
-    int line;
-    int column;
+    public int line;
+    public int column;
 
     public Coordinate(int line, int column) {
         this.line = line;

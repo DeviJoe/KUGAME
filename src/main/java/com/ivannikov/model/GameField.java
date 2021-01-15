@@ -18,11 +18,19 @@ public class GameField {
      * @return координата
      */
     public static Coordinate getCoordinateFromEntity(Entity entity) {
-        Point point = entity.getCoordinate();
+        Point point = entity.getPoint();
         int str = (int) (point.getX() / Settings.TEXTURE_SIZE);
         int col = (int) (point.getY() / Settings.TEXTURE_SIZE);
         return new Coordinate(str, col);
     }
+
+
+    public static Coordinate getCoordinateFromPoint(Point p) {
+        int str = (int) (p.getX() / Settings.TEXTURE_SIZE);
+        int col = (int) (p.getY() / Settings.TEXTURE_SIZE);
+        return new Coordinate(str, col);
+    }
+
 
     /**
      * Возвращает сущность по координате в таблице
@@ -50,13 +58,15 @@ public class GameField {
      */
     public Point scanFieldForMove(Entity entity, Direction direction) {
         Coordinate coordinate = getCoordinateFromEntity(entity);
-        for (int i = coordinate.line; i >= 0 && i < field.length; i += direction.getOffsetLine()) {
-            for (int j = coordinate.column; j>=0 && j < field[0].length; j += direction.getOffsetColumn()) {
-                if (field[i][j] != null && !(field[i][j] instanceof Base)) return getPointFromCoordinate(new Coordinate(i - direction.getOffsetLine(), j - direction.getOffsetColumn()));
-                if (field[i][j] instanceof Base) {
-                    if (((Base) field[i][j]).getColour() == ((Ball)entity).getColour()) return null;
-                }
-            }
+        int i = coordinate.line;
+        int j = coordinate.column;
+        while (i >= 0 && i < field.length && j >= 0 && j < field[0].length) {
+            if (field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Wall
+            || field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Ball)
+                return getPointFromCoordinate(new Coordinate(i, j));
+            if (field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Base) return null;
+            i += direction.getOffsetLine();
+            j += direction.getOffsetColumn();
         }
         return null;
     }
@@ -64,5 +74,16 @@ public class GameField {
     public void deleteEntity(Entity entity) {
         Coordinate coordinate = getCoordinateFromEntity(entity);
         field[coordinate.line][coordinate.column] = null;
+    }
+
+    public Entity getBall(Colour colour) {
+        for (Entity[] entities : field) {
+            for (Entity entity : entities) {
+                if (entity instanceof Ball) {
+                    if (((Ball) entity).getColour() == colour) return entity;
+                }
+            }
+        }
+        return null;
     }
 }
