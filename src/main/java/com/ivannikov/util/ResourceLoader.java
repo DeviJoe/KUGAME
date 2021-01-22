@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,6 +26,7 @@ public class ResourceLoader {
         catch (IOException e) {
             e.printStackTrace();
         }
+
         return image;
     }
 }

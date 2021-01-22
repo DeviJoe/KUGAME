@@ -1,14 +1,11 @@
 package com.ivannikov;
 
 import com.ivannikov.controller.GameController;
-import com.ivannikov.model.Colour;
-import com.ivannikov.model.Direction;
-import com.ivannikov.model.Entity;
-import com.ivannikov.service.ArrowController;
-import com.ivannikov.util.LevelLoader;
-import com.ivannikov.view.GameFrame;
+import com.ivannikov.controller.ArrowController;
+import com.ivannikov.view.Board;
+import com.ivannikov.view.GameForm;
 
-import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class Main {
@@ -21,11 +18,18 @@ public class Main {
 //        field = session.makeMove(Colour.RED, Direction.UP);
 //        System.out.println();
 
-        GameFrame frame = new GameFrame();
-        frame.setVisible(true);
-        frame.setSize(332, 600);
-        frame.addKeyListener(new ArrowController());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        GameController session = new GameController();
+        session.createSession(1);
+
+
+        GameForm form = new GameForm();
+        Board board = new Board(session);
+        board.setLayout(new BorderLayout());
+        form.addKeyListener(new ArrowController(board, session));
+        form.setVisible(true);
+        form.setFocusable(true);
+        form.setContentPane(board);
+
 
     }
 }

@@ -62,9 +62,15 @@ public class GameField {
         int j = coordinate.column;
         while (i >= 0 && i < field.length && j >= 0 && j < field[0].length) {
             if (field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Wall
-            || field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Ball)
+            || field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Ball ||
+                    field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Base &&
+                            ((Base) field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()]).getColour() != ((ColourEntity)entity).getColour())
                 return getPointFromCoordinate(new Coordinate(i, j));
-            if (field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Base) return null;
+            if (field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()] instanceof Base &&
+                    ((Base) field[i + direction.getOffsetLine()][j + direction.getOffsetColumn()]).getColour() == ((ColourEntity)entity).getColour()) {
+                return null;
+            }
+
             i += direction.getOffsetLine();
             j += direction.getOffsetColumn();
         }
