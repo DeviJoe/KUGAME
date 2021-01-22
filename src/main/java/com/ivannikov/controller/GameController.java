@@ -25,11 +25,17 @@ public class GameController {
      * @param level - порядковый номер уровня
      * @throws IOException если путь до файла с уровнем не существует - уровень в базе отсутствует
      */
-    public void createSession(int level) throws IOException {
+    public void createSession(int level)  {
         String path = LEVEL_PATH + level + EXPANSION;
-        Entity[][] levelField = LevelLoader.loadLevel(path);
-        GameField field = new GameField(levelField);
-        session = new GameService(field);
+        try {
+
+
+            Entity[][] levelField = LevelLoader.loadLevel(path);
+            GameField field = new GameField(levelField);
+            session = new GameService(field);
+        } catch (Exception e) {
+            System.out.println("fdfd");
+        }
     }
 
     /**
